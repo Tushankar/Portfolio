@@ -9,11 +9,11 @@ const Employment = () => {
           {/* Company Info Card */}
           <div className="rounded-lg bg-black-200 border border-black-300 p-6 flex flex-col">
             <div className="flex items-center gap-5 mb-6">
-              <div className="work-content_logo bg-black-600 flex items-center justify-center">
+              <div className="w-16 h-16 flex items-center justify-center">
                 <img
                   src="https://kyptronix.us/images/Kyptronix-logo.svg"
                   alt="Kyptronix Logo"
-                  className="w-full h-full object-contain p-1"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div>
