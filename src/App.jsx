@@ -1,27 +1,33 @@
-import React from 'react'
-import Navbar from './sections/Navbar'
-import Hero from './sections/Hero'
-import About from './sections/About'
-import Projects from './sections/Projects'
-import Clients from './sections/Clients'
-import Contact from './sections/Contact'
-import Footer from './sections/Footer'
-import Experience from './sections/Experience'
-import Tech from './sections/Tech'
+import React from "react";
+import Navbar from "./sections/Navbar";
+import Hero from "./sections/Hero";
+import About from "./sections/About";
+import Projects from "./sections/Projects";
+import Clients from "./sections/Clients";
+import Contact from "./sections/Contact";
+import Footer from "./sections/Footer";
+import Experience from "./sections/Experience";
+import Employment from "./sections/Employment";
+import Tech from "./sections/Tech";
 
 const App = () => {
   return (
-    <main className='max-w-7xl mx-auto'>
+    <main className="max-w-7xl mx-auto">
       <Navbar />
       <Hero />
       <About />
       <Projects />
       <Clients />
       <Experience />
-      <div className="mb-0"> {/* reduces spacing */}
+      <Employment />
+      <div className="mb-0">
+        {" "}
+        {/* reduces spacing */}
         <Tech />
       </div>
-      <div className="mt-0"> {/* reduces spacing */}
+      <div className="mt-0">
+        {" "}
+        {/* reduces spacing */}
         <Contact />
       </div>
       <Footer />

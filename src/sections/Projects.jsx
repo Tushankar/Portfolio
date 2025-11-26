@@ -1,12 +1,12 @@
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { Suspense, useEffect, useState, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Center, OrbitControls } from '@react-three/drei';
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Suspense, useEffect, useState, useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Center, OrbitControls } from "@react-three/drei";
 
-import { myProjects } from '../constants/index.js';
-import CanvasLoader from '../components/Loading.jsx';
-import DemoComputer from '../components/DemoComputer.jsx';
+import { myProjects } from "../constants/index.js";
+import CanvasLoader from "../components/Loading.jsx";
+import DemoComputer from "../components/DemoComputer.jsx";
 
 const projectCount = myProjects.length;
 
@@ -18,13 +18,20 @@ const Projects = () => {
 
   const handleNavigation = (direction) => {
     setSelectedProjectIndex((prevIndex) => {
-      if (direction === 'previous') {
+      if (direction === "previous") {
         return prevIndex === 0 ? projectCount - 1 : prevIndex - 1;
       } else {
         return prevIndex === projectCount - 1 ? 0 : prevIndex + 1;
       }
     });
     setShowTooltip(false);
+  };
+
+  const handleLiveSite = () => {
+    const currentProject = myProjects[selectedProjectIndex];
+    if (currentProject.href) {
+      window.open(currentProject.href, "_blank");
+    }
   };
 
   const triggerTooltip = () => {
@@ -34,7 +41,7 @@ const Projects = () => {
     gsap.fromTo(
       tooltipRef.current,
       { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' }
+      { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
     );
   };
 
@@ -49,7 +56,7 @@ const Projects = () => {
       y: -50,
       opacity: 0,
       duration: 0.5,
-      ease: 'power3.in',
+      ease: "power3.in",
       onComplete: () => setShowTooltip(false),
     });
   };
@@ -58,7 +65,7 @@ const Projects = () => {
     gsap.fromTo(
       `.animatedText`,
       { opacity: 0 },
-      { opacity: 1, duration: 1, stagger: 0.2, ease: 'power2.inOut' }
+      { opacity: 1, duration: 1, stagger: 0.2, ease: "power2.inOut" }
     );
   }, [selectedProjectIndex]);
 
@@ -81,8 +88,13 @@ const Projects = () => {
 
           <div
             className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg"
-            style={currentProject.logoStyle}>
-            <img className="w-10 h-10 shadow-sm" src={currentProject.logo} alt="logo" />
+            style={currentProject.logoStyle}
+          >
+            <img
+              className="w-10 h-10 shadow-sm"
+              src={currentProject.logo}
+              alt="logo"
+            />
           </div>
 
           <div className="flex flex-col gap-5 text-white-600 my-5">
@@ -104,19 +116,30 @@ const Projects = () => {
 
             <div
               className="flex items-center gap-2 cursor-pointer text-white-600"
-              onClick={triggerTooltip}>
+              onClick={handleLiveSite}
+            >
               <p>Check Live Site</p>
               <img src="/assets/arrow-up.png" alt="arrow" className="w-3 h-3" />
             </div>
           </div>
 
           <div className="flex justify-between items-center mt-7">
-            <button className="arrow-btn" onClick={() => handleNavigation('previous')}>
+            <button
+              className="arrow-btn"
+              onClick={() => handleNavigation("previous")}
+            >
               <img src="/assets/left-arrow.png" alt="left arrow" />
             </button>
 
-            <button className="arrow-btn" onClick={() => handleNavigation('next')}>
-              <img src="/assets/right-arrow.png" alt="right arrow" className="w-4 h-4" />
+            <button
+              className="arrow-btn"
+              onClick={() => handleNavigation("next")}
+            >
+              <img
+                src="/assets/right-arrow.png"
+                alt="right arrow"
+                className="w-4 h-4"
+              />
             </button>
           </div>
         </div>
@@ -149,11 +172,13 @@ const Projects = () => {
             ref={tooltipRef}
             className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                        bg-black-800 text-white text-lg font-semibold px-6 py-4 rounded-xl
-                       shadow-2xl z-50 w-[90%] max-w-md text-center">
+                       shadow-2xl z-50 w-[90%] max-w-md text-center"
+          >
             <p className="mb-4"> This site is Coming Soon </p>
             <button
               onClick={closeTooltip}
-              className="mt-2 px-4 py-2 bg-white text-black rounded-md hover:bg-gray-200 transition">
+              className="mt-2 px-4 py-2 bg-white text-black rounded-md hover:bg-gray-200 transition"
+            >
               Close
             </button>
           </div>
