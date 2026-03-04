@@ -25,7 +25,7 @@ const Footer = () => {
         </a>
       </div>
 
-      <p className="text-white-500">© 2025 Tushankar Saha. All rights reserved.</p>
+      <p className="text-white-500">© 2026 Tushankar Saha. All rights reserved.</p>
     </footer>
   );
 };

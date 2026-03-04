@@ -11,7 +11,7 @@ const Employment = () => {
             <div className="flex items-center gap-5 mb-6">
               <div className="w-16 h-16 flex items-center justify-center">
                 <img
-                  src="https://kyptronix.us/images/Kyptronix-logo.svg"
+                  src="https://kyptronix.us/svgs/KyptronixLogo.svg"
                   alt="Kyptronix Logo"
                   className="w-full h-full object-contain"
                 />
@@ -38,7 +38,7 @@ const Employment = () => {
               </div>
               <div className="grid-subtext">
                 <p className="mb-1">September 2025 - Present</p>
-                <p>Full-Time • Remote</p>
+                <p>Full-Time • On-Site</p>
               </div>
             </div>
 
@@ -46,11 +46,20 @@ const Employment = () => {
               <p className="text-white-500 text-xs uppercase tracking-wider mb-3">
                 Tech Stack
               </p>
-              <div className="flex flex-wrap gap-2">
-                {["React", "React Native", "Node.js", "Express"].map((tech) => (
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "React",
+                  "React Native",
+                  "Next.js",
+                  "TypeScript",
+                  "Node.js",
+                  "Express",
+                  "AI Automation",
+                  "Chatbot Dev",
+                ].map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1.5 text-xs text-white-600 bg-black-300 rounded-md border border-black-500 whitespace-nowrap"
+                    className="px-2 py-1 text-xs text-white-600 bg-black-300 rounded-md border border-black-500 whitespace-nowrap"
                   >
                     {tech}
                   </span>
@@ -80,8 +89,9 @@ const Employment = () => {
             <p className="text-white-600 text-sm leading-relaxed">
               Kyptronix is an innovative technology company focused on building
               cutting-edge web and mobile solutions. As a Full Stack Developer,
-              I'm part of a talented team dedicated to creating products and
-              services that make a real impact in the digital landscape.
+              I specialized in modernizing legacy systems and building scalable
+              enterprise-grade applications using React, Next.js, and TypeScript,
+              with a strong focus on AI-driven automation.
             </p>
           </div>
         </div>
@@ -132,7 +142,8 @@ const Employment = () => {
                       </svg>
                     </span>
                     <span>
-                      Building scalable web applications and mobile apps
+                      Architecting and building production-ready web and mobile
+                      applications with Next.js, React Native, and TypeScript.
                     </span>
                   </li>
                   <li className="flex gap-2 items-start">
@@ -152,8 +163,8 @@ const Employment = () => {
                       </svg>
                     </span>
                     <span>
-                      Developing frontend interfaces using React and React
-                      Native
+                      Developing performant cross-platform mobile experiences
+                      and server-side rendered web apps.
                     </span>
                   </li>
                   <li className="flex gap-2 items-start">
@@ -173,7 +184,8 @@ const Employment = () => {
                       </svg>
                     </span>
                     <span>
-                      Creating robust backend services with Node.js and Express
+                      Implementing AI-powered automation workflows and
+                      intelligent chatbot solutions for business optimization.
                     </span>
                   </li>
                   <li className="flex gap-2 items-start">
@@ -193,7 +205,8 @@ const Employment = () => {
                       </svg>
                     </span>
                     <span>
-                      Managing databases and implementing RESTful APIs
+                      Designing intelligent system architectures and
+                      high-performance REST and GraphQL APIs.
                     </span>
                   </li>
                   <li className="flex gap-2 items-start">
@@ -213,8 +226,8 @@ const Employment = () => {
                       </svg>
                     </span>
                     <span>
-                      Integrating third-party APIs and cloud services (Firebase,
-                      AWS)
+                      Optimizing application performance, SEO, and developer
+                      experience (DX) through AI-integrated tooling.
                     </span>
                   </li>
                   <li className="flex gap-2 items-start">
@@ -234,7 +247,8 @@ const Employment = () => {
                       </svg>
                     </span>
                     <span>
-                      Implementing authentication and security features
+                      Leading CI/CD implementations and ensuring cloud
+                      scalability and security benchmarks.
                     </span>
                   </li>
                 </ul>

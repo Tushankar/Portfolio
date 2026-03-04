@@ -63,49 +63,49 @@ export const clientReviews = [
 ];
 
 export const myProjects = [
-  // {
-  //   title: 'Podcastr - AI Podcast Platform',
-  //   desc: 'Podcastr is a revolutionary Software-as-a-Service platform that transforms the way podcasts are created. With advanced AI-powered features like text-to-multiple-voices functionality, it allows creators to generate diverse voiceovers from a single text input.',
-  //   subdesc:
-  //     'Built as a unique Software-as-a-Service app with Next.js 14, Tailwind CSS, TypeScript, Framer Motion and Convex, Podcastr is designed for optimal performance and scalability.',
-  //   href: 'https://www.youtube.com/watch?v=zfAb95tJvZQ',
-  //   texture: '/textures/project/project1.mp4',
-  //   logo: '/assets/project-logo1.png',
-  //   logoStyle: {
-  //     backgroundColor: '#2A1816',
-  //     border: '0.2px solid #36201D',
-  //     boxShadow: '0px 0px 60px 0px #AA3C304D',
-  //   },
-  //   spotlight: '/assets/spotlight1.png',
-  //   tags: [
-  //     {
-  //       id: 1,
-  //       name: 'React.js',
-  //       path: '/assets/react.svg',
-  //     },
-  //     {
-  //       id: 2,
-  //       name: 'TailwindCSS',
-  //       path: 'assets/tailwindcss.png',
-  //     },
-  //     {
-  //       id: 3,
-  //       name: 'TypeScript',
-  //       path: '/assets/typescript.png',
-  //     },
-  //     {
-  //       id: 4,
-  //       name: 'Framer Motion',
-  //       path: '/assets/framer.png',
-  //     },
-  //   ],
-  // },
+  {
+    title: "SellSync – Smart POS System for Modern Retail",
+    desc: "SellSync is an all-in-one cloud-powered Point-of-Sale system designed to streamline billing, inventory, and customer management for retail stores. It combines powerful software with high-performance hardware integration.",
+    subdesc:
+      "Built for speed and accuracy, SellSync offers real-time inventory synchronization, advanced analytics, and multi-store support. It supports various payment methods, customizable receipt management, and automated alerts, ensuring seamless retail operations for businesses of all sizes.",
+    href: "https://sellsync.com",
+    texture: "/textures/project/project1.mp4",
+    logo: "/assets/project-logo1.png",
+    logoStyle: {
+      backgroundColor: "#2A1816",
+      border: "0.2px solid #36201D",
+      boxShadow: "0px 0px 60px 0px #AA3C304D",
+    },
+    spotlight: "/assets/spotlight1.png",
+    tags: [
+      {
+        id: 1,
+        name: "Cloud Integration",
+        path: "/assets/react.svg",
+      },
+      {
+        id: 2,
+        name: "Inventory Sync",
+        path: "assets/tailwindcss.png",
+      },
+      {
+        id: 3,
+        name: "Analytics",
+        path: "/assets/js.png",
+      },
+      {
+        id: 4,
+        name: "Hardware Ready",
+        path: "/assets/shadcn.png",
+      },
+    ],
+  },
   {
     title: "RayOne System - Vitamin & Wellness Platform",
     desc: "RayOne System is a next-generation platform designed to empower entrepreneurs to build, launch, and grow successful vitamin and wellness stores with ease. Positioned as the industry's #1 solution, it provides clarity, structure, and proven strategies for long-term success.",
     subdesc:
       "Built with expert mentorship from Ray/Rayman Khan and transformational support systems, the platform includes step-by-step guidance, personalized support, and scalable tools for both beginners and experienced business owners to confidently enter and succeed in the wellness retail industry.",
-    href: "https://rayonesystem.netlify.app/",
+    href: "https://rayonesystem.com",
     texture: "/textures/project/project2.mp4",
     logo: "/assets/project-logo2.png",
     logoStyle: {
@@ -138,11 +138,11 @@ export const myProjects = [
     ],
   },
   {
-    title: "HRMS - Human Resource Management System",
-    desc: "HRMS is a streamlined platform designed to handle and organize essential employee documentation and HR workflows. The system focuses on efficient form management and approval processes, centralizing all employee documents.",
+    title: "CareComp - HR Management System",
+    desc: "CareComp is a streamlined platform designed to handle and organize essential employee documentation and HR workflows. The system focuses on efficient form management and approval processes, centralizing all employee documents.",
     subdesc:
       "Employees can fill out important compliance and onboarding forms such as W4, W9, and other required documents directly within the system. HR teams can review submissions, approve or request changes, and update employee status through stages: Pending → In Review → Approved → In Progress. This automation reduces manual paperwork and creates smooth communication between employees and HR.",
-    href: "https://hrmsmanagement.netlify.app/",
+    href: "https://carecompapp.com",
     texture: "/textures/project/project3.mp4",
     logo: "/assets/project-logo3.png",
     logoStyle: {
@@ -181,7 +181,7 @@ export const myProjects = [
     desc: "A comprehensive full-stack web application designed for Al-Rasheed Academy's complete school management. Features a public website with carousels and school information, role-based authentication for admins, staff, parents, and students, plus enrollment forms and student/parent surveys.",
     subdesc:
       "Built with modern web technologies, the system includes a calendar events module, photo gallery, contact forms, job and volunteer applications, and an administration dashboard. The comprehensive forms system handles health records, emergency contacts, picture authorizations, transfer records, and tuition contracts, providing complete school management in one integrated platform.",
-    href: "https://alrasheedacademy.netlify.app/",
+    href: "https://alrasheedacademy.org",
     texture: "/textures/project/project4.mp4",
     logo: "/assets/project-logo4.png",
     logoStyle: {
@@ -210,6 +210,43 @@ export const myProjects = [
         id: 4,
         name: "MongoDB",
         path: "/assets/framer.svg",
+      },
+    ],
+  },
+  {
+    title: "Housbe - Complete Real Estate Technology Platform",
+    desc: "Housbe is a full-featured SaaS real estate marketplace connecting buyers, sellers, agents, and lenders. It facilitates advanced property listings, AI-powered lead generation, and real-time communication within a comprehensive ecosystem.",
+    subdesc:
+      "The platform features role-based dashboards, OTP verification, and secure payment processing via Stripe and PayPal. It includes advanced property filtering, a buying leads marketplace, real-time messaging with media sharing, and automated document management with mPDF, providing a complete end-to-end solution for the real estate industry.",
+    href: "https://housbe.com",
+    texture: "/textures/project/project5.mp4",
+    logo: "/assets/project-logo5.png",
+    logoStyle: {
+      backgroundColor: "#1C1A43",
+      border: "0.2px solid #252262",
+      boxShadow: "0px 0px 60px 0px #635BFF4D",
+    },
+    spotlight: "/assets/spotlight5.png",
+    tags: [
+      {
+        id: 1,
+        name: "React.js",
+        path: "/assets/react.svg",
+      },
+      {
+        id: 2,
+        name: "TailwindCSS",
+        path: "assets/tailwindcss.png",
+      },
+      {
+        id: 3,
+        name: "Stripe",
+        path: "/assets/framer.svg",
+      },
+      {
+        id: 4,
+        name: "Real-time Messaging",
+        path: "/assets/js.png",
       },
     ],
   },
