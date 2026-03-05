@@ -11,8 +11,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const HOVER_TEXT = "Know About Tushankar";
-const OPENROUTER_API_KEY =
-  "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";
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
 
 const SYSTEM_PROMPT = `You are an AI assistant embedded in the personal portfolio website of Tushankar Saha, a skilled Full Stack Developer. Your job is to answer questions about Tushankar in a helpful, friendly, and professional manner. Only answer questions related to Tushankar, his work, skills, projects, experience, and background. If asked about unrelated topics, politely redirect the conversation back to Tushankar's portfolio.
