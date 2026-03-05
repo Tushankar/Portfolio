@@ -20,6 +20,8 @@ import Project4 from "./pages/Project4";
 import Project5 from "./pages/Project5";
 import Project6 from "./pages/Project6";
 
+import FloatingAIChat from "./components/FloatingAIChat";
+
 const ScrollToHash = () => {
   const { hash } = useLocation();
 
@@ -72,6 +74,7 @@ const App = () => {
         <Route path="/project5" element={<Project5 />} />
         <Route path="/project6" element={<Project6 />} />
       </Routes>
+      <FloatingAIChat />
     </>
   );
 };
