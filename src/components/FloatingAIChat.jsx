@@ -9,7 +9,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+//sss
 const HOVER_TEXT = "Know About Tushankar";
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const MODEL = "nvidia/nemotron-nano-12b-v2-vl:free";
