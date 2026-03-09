@@ -94,7 +94,7 @@ Databases: MongoDB, SQL
 Tools & Platforms: GitHub, Firebase, Stripe, PayPal, mPDF, AI Automation
 
 --- PROJECTS (Live Production Projects) ---
-When someone asks about Tushankar's projects, always include the live website links.
+IMPORTANT: When someone asks about Tushankar's projects, ALWAYS provide a comprehensive list including BOTH "Live Production Projects" and "Frontend Showcase Projects". Always include clickable links using markdown format: [Project Name](https://link.com) for live sites and [Project Name](/projectX) for showcase routes.
 
 1. SellSync – Smart POS System for Modern Retail
    Live Website: https://sellsync.com
@@ -117,7 +117,7 @@ When someone asks about Tushankar's projects, always include the live website li
 4. Al-Rasheed Academy – School Management System
    Live Website: https://alrasheedacademy.org
    Description: A comprehensive full-stack school management web application for Al-Rasheed Academy.
-   Key Features: Public website with carousels, role-based authentication (admins, staff, parents, students), enrollment forms, student/parent surveys, calendar events, photo gallery, contact forms, job/volunteer applications, admin dashboard. Forms for health records, emergency contacts, picture authorizations, transfer records, tuition contracts.
+   Key Features: Public website with carousels, role-based authentication (admins, staff, parents, students), enrollment forms, student/parent surveys, calendar events, photo gallery, contact forms, job/volunteer applications, admin dashboard.
    Tech: React.js, Node.js, TailwindCSS, MongoDB
 
 5. Housbe – Complete Real Estate Technology Platform
@@ -127,43 +127,45 @@ When someone asks about Tushankar's projects, always include the live website li
    Tech: React.js, TailwindCSS, Stripe, PayPal, Real-time Messaging, Node.js
 
 --- FRONTEND SHOWCASE PROJECTS (Dashboard / UI Clones) ---
-These are 6 beautifully crafted frontend UI projects showcased in the portfolio dashboard section. They demonstrate Tushankar's frontend design and development skills.
+These are beautifully crafted frontend UI projects showcased in the portfolio dashboard section. Whenever you mention any of these, ALWAYS provide a clickable link using markdown format: [Project Name](/projectX).
 
-1. Wealthify – Personal Finance & Budget Tracker
+1. Wealth Management – Digital Banking
    Route: /project1
    Description: A modern wealth management landing page with real-time budget tracking. Features a video hero background and a clean dark UI.
    Tagline: "Build Wealth That Lasts Generations"
    Focus: Real-Time Budget Tracking, Wealth Management
 
-2. Viral Media Agency – Social Media & Reels Agency
+2. Video Agency – Content Studio
    Route: /project2
    Description: A sleek social media marketing agency landing page. Showcases short-form content strategy for growing brands organically.
    Tagline: "Agency that makes your videos & reels viral"
    Focus: Brand Growth, Organic Views, Short-form Content, 70+ Creators
 
-3. Targo – Logistics & Freight Company
+3. Logistics Hub – Global Transport
    Route: /project3
    Description: A bold, high-impact logistics company landing page with diagonal design elements (clip-diagonal), dark theme, and strong CTA.
    Tagline: Expert Logistics Planning
    Focus: Freight, Logistics, Shipping, Supply Chain
 
-4. Nexus – Tech/SaaS Platform
+4. Nexus/Design Era – Tech Platform
    Route: /project4
    Description: A futuristic dark navy SaaS/enterprise platform landing page with bold uppercase typography.
    Brand: Nexus
    Focus: Enterprise Platform, SaaS, Technology Solutions
 
-5. Framelix 3D – Cinematic Motion Studios
+5. Cinematic Studio – Motion 3D
    Route: /project5
    Description: A stunning cinematic motion studio landing page with full-bleed video background, Reels and Pipeline sections.
    Brand: Framelix 3D
    Focus: Cinematic Animation, Motion Design, Video Production, 3D Rendering
 
-6. Web3 Speed – Blockchain / Web3 Landing Page
+6. Web3 Experience – Web3 Hub
    Route: /project6
    Description: A premium Web3 startup landing page with a dark gradient design, General Sans typography, and pill buttons. Built for a blockchain/crypto product.
    Tagline: "Web3 at the Speed of Experience"
    Focus: Web3, Blockchain, Crypto, DeFi — Early access from May 1, 2026
+
+When listing projects, categorize them into "Production Applications (Real-world Live Sites)" and "Frontend UI/UX Showcase (Premium Clones)". Ensure BOTH categories are shown to give a full picture of Tushankar's capabilities.
 
 --- CLIENT REVIEWS ---
 - Pratyay Chatterjee (Marketing Director at GreenLeaf): "Transformed our outdated website into a modern, user-friendly platform. Attention to detail and commitment to quality are unmatched."
@@ -200,7 +202,7 @@ const SUGGESTIONS = [
   "Show UI/frontend projects",
 ];
 
-// Simple markdown renderer for bold and bullet lists
+// Simple markdown renderer for bold, bullet lists, and clickable links
 const renderMarkdown = (text) => {
   const lines = text.split("\n");
   return lines.map((line, i) => {
@@ -228,21 +230,42 @@ const renderMarkdown = (text) => {
 
 const boldify = (text) =>
   text
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="chat-link"><strong>$1</strong></a>')
+    .replace(/(?<!href=")(https?:\/\/[^\s]+)/g, '<a href="$1" class="chat-link" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>");
+
 
 const FloatingAIChat = () => {
   const [hovered, setHovered] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    try {
+      const saved = localStorage.getItem("tushankar_chat_history");
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Error reading chat history from localStorage", e);
+      return [];
+    }
+  });
   const [inputValue, setInputValue] = useState("");
   const [isAITyping, setIsAITyping] = useState(false);
   const [streamingText, setStreamingText] = useState("");
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const abortControllerRef = useRef(null);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
+
+  // Persistence logic
+  useEffect(() => {
+    try {
+      localStorage.setItem("tushankar_chat_history", JSON.stringify(messages));
+    } catch (e) {
+      console.error("Error saving chat history to localStorage", e);
+    }
+  }, [messages]);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -269,10 +292,20 @@ const FloatingAIChat = () => {
   };
 
   const handleClearChat = () => {
+    setShowClearConfirm(true);
+  };
+
+  const confirmClear = () => {
     abortControllerRef.current?.abort();
     setMessages([]);
     setStreamingText("");
     setIsAITyping(false);
+    localStorage.removeItem("tushankar_chat_history");
+    setShowClearConfirm(false);
+  };
+
+  const cancelClear = () => {
+    setShowClearConfirm(false);
   };
 
   const sendMessage = useCallback(
@@ -468,6 +501,19 @@ const FloatingAIChat = () => {
         .chat-scroll::-webkit-scrollbar { width: 4px; }
         .chat-scroll::-webkit-scrollbar-track { background: transparent; }
         .chat-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 999px; }
+
+        .chat-link {
+          color: #60a5fa;
+          text-decoration: underline;
+          font-weight: 600;
+          transition: all 0.2s ease;
+          position: relative;
+        }
+        .chat-link:hover {
+          color: #93c5fd;
+          opacity: 0.8;
+          text-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
+        }
       `}</style>
 
       <AnimatePresence>
@@ -770,6 +816,47 @@ const FloatingAIChat = () => {
                           </p>
                         </div>
                       </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Clear Chat Confirmation Modal */}
+                <AnimatePresence>
+                  {showClearConfirm && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 z-[110] bg-black/60 backdrop-blur-md flex items-center justify-center p-8 text-center"
+                    >
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 10 }}
+                        className="bg-[#121212] border border-white/10 rounded-[24px] p-6 w-full max-w-[320px] shadow-2xl"
+                      >
+                        <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mx-auto mb-4">
+                          <RefreshCw className="w-6 h-6 text-red-500/80" />
+                        </div>
+                        <h3 className="text-white text-lg font-bold mb-2">Clear Chat History?</h3>
+                        <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                          This will permanently delete all messages in this conversation.
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={cancelClear}
+                            className="flex-1 py-3 rounded-xl bg-white/5 border border-white/5 text-white/70 text-sm font-semibold hover:bg-white/10 hover:text-white transition-all active:scale-95"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={confirmClear}
+                            className="flex-1 py-3 rounded-xl bg-red-500/80 text-white text-sm font-semibold hover:bg-red-500 transition-all active:scale-95 shadow-[0_0_20px_rgba(239,68,68,0.2)]"
+                          >
+                            Clear All
+                          </button>
+                        </div>
+                      </motion.div>
                     </motion.div>
                   )}
                 </AnimatePresence>
