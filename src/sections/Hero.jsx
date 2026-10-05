@@ -1,5 +1,5 @@
 import { Leva } from "leva";
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useMediaQuery } from "react-responsive";
 import { PerspectiveCamera } from "@react-three/drei";
@@ -12,6 +12,8 @@ import Target from "../components/Target.jsx";
 import CanvasLoader from "../components/Loading.jsx";
 import HeroCamera from "../components/HeroCamera.jsx";
 import ErrorBoundary from "../components/ErrorBoundary.jsx";
+import FitToSpace from "../components/FitToSpace.jsx";
+import useSpaceBetween from "../hooks/useSpaceBetween.js";
 import { calculateSizes } from "../constants/index.js";
 import { HackerRoom } from "../components/HackerRoom.jsx";
 
@@ -23,9 +25,18 @@ const Hero = () => {
 
   const sizes = calculateSizes(isSmall, isMobile, isTablet);
 
+  // Keep the desk in the space between the intro text and the button
+  const sectionRef = useRef(null);
+  const textRef = useRef(null);
+  const buttonRef = useRef(null);
+  const deskSpace = useSpaceBetween(sectionRef, textRef, buttonRef, 24);
+
   return (
-    <section className="min-h-screen w-full flex flex-col relative" id="home">
-      <div className="w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3">
+    <section ref={sectionRef} className="min-h-screen w-full flex flex-col relative" id="home">
+      <div
+        ref={textRef}
+        className="w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3 relative z-10 pointer-events-none"
+      >
         <p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
           Hi, I am Tushankar <span className="waving-hand">👋</span>
         </p>
@@ -46,11 +57,13 @@ const Hero = () => {
               <PerspectiveCamera makeDefault position={[0, 0, 30]} />
 
               <HeroCamera isMobile={isMobile}>
-                <HackerRoom
+                <FitToSpace
+                  space={deskSpace}
                   scale={sizes.deskScale}
                   position={sizes.deskPosition}
-                  rotation={[0.1, -Math.PI, 0]}
-                />
+                >
+                  <HackerRoom rotation={[0.1, -Math.PI, 0]} />
+                </FitToSpace>
               </HeroCamera>
 
               <group>
@@ -67,7 +80,7 @@ const Hero = () => {
         </ErrorBoundary>
       </div>
 
-      <div className="absolute bottom-7 left-0 right-0 w-full z-10 c-space">
+      <div ref={buttonRef} className="absolute bottom-7 left-0 right-0 w-full z-10 c-space">
         <a href="#about" className="w-fit">
           <Button
             name="Let's work together"

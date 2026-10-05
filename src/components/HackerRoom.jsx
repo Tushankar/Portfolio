@@ -32,7 +32,8 @@ export function HackerRoom(props) {
       </mesh>
       <mesh geometry={nodes.table_table_mat_0_9.geometry} material={materials.cables_mat} />
       <mesh geometry={nodes.table_table_mat_0_10.geometry} material={materials.props_mat} />
-      <mesh geometry={nodes.table_table_mat_0_11.geometry} material={materials.ground_mat} />
+      {/* Floor plane fades out at its edges, so it's left out when fitting the hero */}
+      <mesh geometry={nodes.table_table_mat_0_11.geometry} material={materials.ground_mat} userData={{ skipFit: true }} />
       <mesh geometry={nodes.table_table_mat_0_12.geometry} material={materials.key_mat} />
     </group>
   );
