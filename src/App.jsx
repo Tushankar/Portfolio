@@ -12,6 +12,7 @@ import Experience from "./sections/Experience";
 import Employment from "./sections/Employment";
 import Tech from "./sections/Tech";
 
+
 // Import project pages
 import Project1 from "./pages/Project1";
 import Project2 from "./pages/Project2";
