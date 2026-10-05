@@ -128,7 +128,7 @@ IMPORTANT: When someone asks about Tushankar's projects, ALWAYS provide a compre
 
 2. Karobar Sathi – Billing, Khata & Stock App for Shops (Mobile App, in development)
    Status: In active development and testing ahead of a Play Store launch. Not publicly released yet.
-   Description: A multi-business POS, inventory and profit-management mobile app for independent Indian retailers (kirana, hardware, paint, pharmacy, electronics, restaurants, tea stalls and more). Tushankar designed and built it end to end: the mobile app, the API and the admin console.
+   Description: A multi-business POS, inventory and profit-management mobile app for independent Indian retailers (kirana, hardware, paint, pharmacy, electronics, restaurants, tea stalls and more). Tushankar designed and built it end to end: the mobile app, the API and the admin console. Do not say it was built at or for Kyptronix or any other company — only that Tushankar is developing it.
    Key Features: POS billing with cash, UPI, card and udhaar (credit) payments; khata ledgers for customers and suppliers; FIFO-costed profit & loss and 12 reports; offline sales queue that syncs when back online; barcode scanning; invoices for 58mm/80mm thermal or A4 PDF; staff roles with fine-grained permissions; 22 business-type presets; 11 languages (English, Hindi, Bengali, Marathi, Tamil, Telugu, Gujarati, Punjabi, Kannada, Malayalam, Arabic); "Ask Sathi" AI assistant that answers questions about the shop's own data; Razorpay subscriptions and a partner referral programme.
    Tech: React Native, Expo, TypeScript, expo-router, Zustand, TanStack Query, Laravel 12, MySQL, Razorpay.
 
