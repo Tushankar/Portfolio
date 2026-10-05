@@ -11,7 +11,7 @@ const Employment = () => {
             <div className="flex items-center gap-5 mb-6">
               <div className="w-16 h-16 flex items-center justify-center">
                 <img
-                  src="https://kyptronix.us/svgs/KyptronixLogo.svg"
+                  src="/assets/kyptronix.svg"
                   alt="Kyptronix Logo"
                   className="w-full h-full object-contain"
                 />
@@ -38,7 +38,23 @@ const Employment = () => {
               </div>
               <div className="grid-subtext">
                 <p className="mb-1">September 2025 - Present</p>
-                <p>Full-Time • On-Site</p>
+                <p>Full-Time • On-Site • Kolkata</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-white-500"></div>
+                <p className="text-white-600 text-sm">
+                  Development Intern · Jun 2025 - Aug 2025
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="rounded-lg bg-black-300 border border-black-500 p-3">
+                  <p className="text-white text-xl font-semibold">1+ yr</p>
+                  <p className="text-white-500 text-xs mt-0.5">at Kyptronix</p>
+                </div>
+                <div className="rounded-lg bg-black-300 border border-black-500 p-3">
+                  <p className="text-white text-xl font-semibold">Web + App</p>
+                  <p className="text-white-500 text-xs mt-0.5">full stack ownership</p>
+                </div>
               </div>
             </div>
 
@@ -87,11 +103,12 @@ const Employment = () => {
               <p className="font-bold text-white-800">About Kyptronix LLP</p>
             </div>
             <p className="text-white-600 text-sm leading-relaxed">
-              Kyptronix is an innovative technology company focused on building
-              cutting-edge web and mobile solutions. As a Full Stack Developer,
-              I specialized in modernizing legacy systems and building scalable
-              enterprise-grade applications using React, Next.js, and TypeScript,
-              with a strong focus on AI-driven automation.
+              Kyptronix is a technology company building web and mobile
+              products for international clients. I joined as an intern in
+              June 2025 and moved to a full-time Full Stack Developer role in
+              September 2025, where I build scalable production applications
+              with React, Next.js, React Native and Node.js — including the OBS
+              global events and ticketing platform.
             </p>
           </div>
         </div>

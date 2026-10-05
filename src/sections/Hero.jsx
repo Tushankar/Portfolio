@@ -32,6 +32,9 @@ const Hero = () => {
         <p className="hero_tag text-gray_gradient">
           Building Products & Brands
         </p>
+        <p className="text-center text-white-600 sm:text-lg text-sm font-generalsans">
+          Full Stack & Mobile Developer · React · React Native · Node.js
+        </p>
       </div>
 
       <div className="w-full h-full absolute inset-0">

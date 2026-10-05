@@ -3,6 +3,16 @@ import { technologies } from "../constants/index";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { motion } from "framer-motion";
+import { SiExpo, SiFirebase, SiNextdotjs, SiTypescript } from "react-icons/si";
+import { TbBrandReactNative } from "react-icons/tb";
+
+const ICONS = {
+  expo: SiExpo,
+  firebase: SiFirebase,
+  nextjs: SiNextdotjs,
+  reactnative: TbBrandReactNative,
+  typescript: SiTypescript,
+};
 
 // === GlowingBackground Component ===
 const GlowSphere = () => {
@@ -44,7 +54,9 @@ const GlowingBackground = () => {
 };
 
 // === Icon Component ===
-const TechIcon = ({ src, alt, delay = 0, title }) => {
+const TechIcon = ({ tech, delay = 0 }) => {
+  const Icon = tech.icon && ICONS[tech.icon];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50, scale: 0.8 }}
@@ -57,7 +69,7 @@ const TechIcon = ({ src, alt, delay = 0, title }) => {
       }}
       viewport={{ once: true, margin: "50px" }}
       className="w-20 h-20 sm:w-24 sm:h-24 group relative"
-      title={title}
+      title={tech.name}
     >
       <motion.div
         className="w-full h-full flex items-center justify-center"
@@ -71,16 +83,26 @@ const TechIcon = ({ src, alt, delay = 0, title }) => {
           }
         }}
       >
-        <img
-          src={src}
-          alt={alt}
-          className="w-3/4 h-3/4 object-contain drop-shadow-lg"
-        />
+        {Icon ? (
+          <Icon
+            aria-label={tech.name}
+            className="w-3/5 h-3/5 drop-shadow-lg"
+            style={{ color: tech.color }}
+          />
+        ) : (
+          <img
+            src={tech.path}
+            alt={tech.name}
+            className={`w-3/4 h-3/4 object-contain drop-shadow-lg ${
+              tech.invert ? "invert" : ""
+            }`}
+          />
+        )}
       </motion.div>
 
       {/* Hover Tooltip */}
       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-1.5 bg-black/80 rounded-md text-white text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        {title}
+        {tech.name}
         <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-black/80 rotate-45" />
       </div>
     </motion.div>
@@ -89,8 +111,8 @@ const TechIcon = ({ src, alt, delay = 0, title }) => {
 
 // === Tech Section ===
 const Tech = () => {
-  const firstRow = technologies.slice(0, 7);
-  const secondRow = technologies.slice(7);
+  const firstRow = technologies.slice(0, 9);
+  const secondRow = technologies.slice(9);
 
   return (
     <div
@@ -124,13 +146,7 @@ const Tech = () => {
         }}
       >
         {firstRow.map((tech, index) => (
-          <TechIcon
-            key={tech.name}
-            src={tech.path}
-            alt={tech.name}
-            title={tech.name}
-            delay={index * 0.1}
-          />
+          <TechIcon key={tech.name} tech={tech} delay={index * 0.1} />
         ))}
       </motion.div>
 
@@ -150,10 +166,8 @@ const Tech = () => {
         {secondRow.map((tech, index) => (
           <TechIcon
             key={tech.name}
-            src={tech.path}
-            alt={tech.name}
-            title={tech.name}
-            delay={(index + 7) * 0.1}
+            tech={tech}
+            delay={(index + firstRow.length) * 0.1}
           />
         ))}
       </motion.div>

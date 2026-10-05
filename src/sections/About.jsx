@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Globe from 'react-globe.gl';
 
 import Button from '../components/Button.jsx';
 
 const About = () => {
   const [hasCopied, setHasCopied] = useState(false);
+  const globeRef = useRef();
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(' sahatushankar234@gmail.com');
+    navigator.clipboard.writeText('sahatushankar234@gmail.com');
     setHasCopied(true);
 
     setTimeout(() => {
@@ -25,8 +26,8 @@ const About = () => {
             <div>
               <p className="grid-headtext">Hi, I’m Tushankar Saha</p>
               <p className="grid-subtext">
-                With 4 years of experience, I have honed my skills in both frontend and backend dev, creating dynamic
-                and responsive websites.
+                A Full Stack &amp; Mobile Developer with 1+ year of professional experience at Kyptronix LLP, shipping
+                production web platforms and cross-platform mobile apps — from database to deploy.
               </p>
             </div>
           </div>
@@ -39,8 +40,8 @@ const About = () => {
             <div>
               <p className="grid-headtext">Tech Stack</p>
               <p className="grid-subtext">
-                I specialize in a variety of languages, frameworks, and tools that allow me to build robust and scalable
-                applications
+                React, Next.js and React Native on the front, Node.js, Express and MongoDB on the back — plus Java and
+                Spring Boot for robust, scalable services.
               </p>
             </div>
           </div>
@@ -50,6 +51,8 @@ const About = () => {
           <div className="grid-container">
             <div className="rounded-3xl w-full sm:h-[326px] h-fit flex justify-center items-center">
               <Globe
+                ref={globeRef}
+                onGlobeReady={() => globeRef.current?.pointOfView({ lat: 22.58, lng: 88.46, altitude: 2.2 }, 1500)}
                 height={326}
                 width={326}
                 backgroundColor="rgba(0, 0, 0, 0)"
@@ -58,7 +61,7 @@ const About = () => {
                 showGraticules
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                labelsData={[{ lat: 40, lng: -100, text: 'Rjieka, Croatia', color: 'white', size: 15 }]}
+                labelsData={[{ lat: 22.58, lng: 88.46, text: 'Kolkata, India', color: 'white', size: 15 }]}
               />
             </div>
             <div>
@@ -82,8 +85,9 @@ const About = () => {
             <div>
               <p className="grid-headtext">My Passion for Coding</p>
               <p className="grid-subtext">
-                I love solving problems and building things through code. Programming isn&apos;t just my
-                profession—it&apos;s my passion. I enjoy exploring new technologies, and enhancing my skills.
+                I love solving real problems through code — whether that&apos;s ticketing for a global summit season or a
+                billing app that keeps a shopkeeper selling even when the internet drops. Programming isn&apos;t just my profession,
+                it&apos;s my passion, and I&apos;m always exploring new technologies to sharpen my craft.
               </p>
             </div>
           </div>
