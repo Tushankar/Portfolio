@@ -12,7 +12,38 @@ import { motion, AnimatePresence } from "framer-motion";
 //sss
 const HOVER_TEXT = "Know About Tushankar";
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-const MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
+// OpenRouter tries these in order when one is down, removed or rate-limited
+// (free models come and go — a single hard-coded model is what broke the chat).
+// The API accepts at most 3.
+const MODELS = [
+  "nvidia/nemotron-3-super-120b-a12b:free",
+  "nvidia/nemotron-3-ultra-550b-a55b:free",
+  "nvidia/nemotron-3.5-lightning:free",
+];
+const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
+
+class ChatError extends Error {
+  constructor(status, detail) {
+    super(detail || `API error: ${status}`);
+    this.status = status;
+  }
+}
+
+const friendlyError = (err) => {
+  if (!OPENROUTER_API_KEY)
+    return "The AI chat isn't configured yet (missing API key). Please email me at sahatushankar234@gmail.com instead.";
+  switch (err?.status) {
+    case 401:
+    case 403:
+      return "The AI service rejected this site's API key. Please try again later or email sahatushankar234@gmail.com.";
+    case 402:
+      return "The AI service is out of credits right now. Please try again later.";
+    case 429:
+      return "The free AI models are busy right now. Please wait a few seconds and try again.";
+    default:
+      return "Sorry, I couldn't reach the AI just now. Please try again in a moment.";
+  }
+};
 
 const SYSTEM_PROMPT = `You are an AI assistant embedded in the personal portfolio website of Tushankar Saha, a skilled Full Stack Developer. Your job is to answer questions about Tushankar in a helpful, friendly, and professional manner. Only answer questions related to Tushankar, his work, skills, projects, experience, and background. If asked about unrelated topics, politely redirect the conversation back to Tushankar's portfolio.
 
@@ -312,15 +343,19 @@ const FloatingAIChat = () => {
       setIsAITyping(true);
       setStreamingText("");
 
-      // Build history for API (exclude system prompt — sent separately)
+      // Build history for API (exclude system prompt — sent separately).
+      // Earlier error bubbles are UI-only and must not be fed back to the model.
       const apiMessages = [
         { role: "system", content: SYSTEM_PROMPT },
-        ...newMessages.map((m) => ({ role: m.role, content: m.content })),
+        ...newMessages
+          .filter((m) => !m.isError)
+          .map((m) => ({ role: m.role, content: m.content })),
       ];
 
       abortControllerRef.current = new AbortController();
+      const { signal } = abortControllerRef.current;
 
-      try {
+      const streamReply = async () => {
         const response = await fetch(
           "https://openrouter.ai/api/v1/chat/completions",
           {
@@ -332,7 +367,7 @@ const FloatingAIChat = () => {
               "X-Title": "Tushankar Portfolio",
             },
             body: JSON.stringify({
-              model: MODEL,
+              models: MODELS,
               messages: apiMessages,
               stream: true,
               max_tokens: 1024,
@@ -341,41 +376,77 @@ const FloatingAIChat = () => {
               // which adds seconds of latency and can exhaust max_tokens.
               reasoning: { enabled: false },
             }),
-            signal: abortControllerRef.current.signal,
+            signal,
           },
         );
 
         if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
+          let detail = "";
+          try {
+            detail = (await response.json())?.error?.message ?? "";
+          } catch {
+            // body wasn't JSON
+          }
+          throw new ChatError(response.status, detail);
         }
 
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let fullText = "";
+        let buffer = "";
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          const chunk = decoder.decode(value, { stream: true });
-          const lines = chunk.split("\n").filter((l) => l.trim() !== "");
+          // An SSE line can be split across network chunks, so keep the
+          // trailing partial line in the buffer until the rest arrives.
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop();
 
           for (const line of lines) {
-            if (line.startsWith("data: ")) {
-              const data = line.slice(6);
-              if (data === "[DONE]") continue;
-              try {
-                const parsed = JSON.parse(data);
-                const delta = parsed.choices?.[0]?.delta?.content;
-                if (delta) {
-                  fullText += delta;
-                  setStreamingText(fullText);
-                }
-              } catch {
-                // ignore parse errors for partial chunks
-              }
+            if (!line.startsWith("data: ")) continue;
+            const data = line.slice(6).trim();
+            if (data === "[DONE]") continue;
+
+            let parsed;
+            try {
+              parsed = JSON.parse(data);
+            } catch {
+              continue;
+            }
+            // OpenRouter reports mid-stream failures inside a 200 response
+            if (parsed.error) {
+              throw new ChatError(parsed.error.code, parsed.error.message);
+            }
+            const delta = parsed.choices?.[0]?.delta?.content;
+            if (delta) {
+              fullText += delta;
+              setStreamingText(fullText);
             }
           }
+        }
+
+        if (!fullText.trim()) throw new ChatError(502, "Empty response");
+        return fullText;
+      };
+
+      try {
+        if (!OPENROUTER_API_KEY) throw new ChatError(401, "Missing API key");
+
+        let fullText;
+        try {
+          fullText = await streamReply();
+        } catch (err) {
+          // Free models hit rate limits often; retry once after a short pause
+          const retryable =
+            err.name !== "AbortError" &&
+            (!(err instanceof ChatError) || RETRYABLE_STATUS.has(err.status));
+          if (!retryable) throw err;
+          setStreamingText("");
+          await new Promise((resolve) => setTimeout(resolve, 1500));
+          fullText = await streamReply();
         }
 
         setMessages((prev) => [
@@ -385,12 +456,12 @@ const FloatingAIChat = () => {
         setStreamingText("");
       } catch (err) {
         if (err.name !== "AbortError") {
+          console.error("AI chat error:", err.status ?? "", err.message);
           setMessages((prev) => [
             ...prev,
             {
               role: "assistant",
-              content:
-                "Sorry, I encountered an error connecting to the AI. Please try again.",
+              content: friendlyError(err),
               isError: true,
             },
           ]);
@@ -806,7 +877,7 @@ const FloatingAIChat = () => {
                           <p className="text-center text-[10px] text-white/30 leading-tight pb-1">
                             AI responses are generated by{" "}
                             <span className="text-white/50">
-                              nvidia/nemotron
+                              NVIDIA Nemotron
                             </span>{" "}
                             via OpenRouter. May not be 100% accurate.
                           </p>
