@@ -140,11 +140,17 @@ const Projects = () => {
 
           <div className="flex items-center gap-4 flex-wrap">
             <div
-              className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg"
+              className={`backdrop-filter backdrop-blur-3xl w-fit rounded-lg ${
+                currentProject.logoWide ? "px-5 py-4" : "p-3"
+              }`}
               style={currentProject.logoStyle}
             >
               <img
-                className="w-10 h-10 object-contain shadow-sm rounded-md"
+                className={
+                  currentProject.logoWide
+                    ? "h-8 w-auto"
+                    : "w-10 h-10 object-contain shadow-sm rounded-md"
+                }
                 src={currentProject.logo}
                 alt={`${currentProject.shortName} logo`}
               />
